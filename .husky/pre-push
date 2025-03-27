@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -e
+
+# Run linting, typechecking, and tests before pushing
+bun run lint
+bun run typecheck
+bun run test
+
+# Check if any files were changed by linting/formatting
+if ! git diff --exit-code; then
+  echo "🐛 Fixes detected after lint/typecheck. Please review and commit them."
+  git diff
+  exit 1
+fi

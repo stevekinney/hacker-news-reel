@@ -1,0 +1,89 @@
+{
+  "name": "hacker-news-reel",
+  "version": "0.0.1",
+  "description": "A lightweight, typed client for the Hacker News API with validation using Zod",
+  "module": "index.ts",
+  "type": "module",
+  "private": false,
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "bun run build.ts && bun run build:types",
+    "build:types": "tsc --project tsconfig.build.json",
+    "lint": "eslint --fix .",
+    "format": "prettier --write .",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "watch": "bun run build.ts --watch",
+    "prepublishOnly": "bun run build",
+    "prepare": "husky"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "bun": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "homepage": "https://github.com/stevekinney/hacker-news-reel#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stevekinney/hacker-news-reel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stevekinney/hacker-news-reel/issues"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "hacker-news",
+    "hackernews",
+    "api",
+    "client",
+    "typescript",
+    "zod"
+  ],
+  "author": "Steve Kinney",
+  "license": "MIT",
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.26.0",
+    "@types/bun": "latest",
+    "eslint": "^9.26.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-unicorn": "^59.0.1",
+    "globals": "^16.1.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "bottleneck": "^2.19.5",
+    "zod": "^3.24.2"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.json": [
+      "prettier --write"
+    ]
+  }
+}
