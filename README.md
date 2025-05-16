@@ -108,10 +108,6 @@ try {
 }
 ```
 
-### Schemas & Types
-
-- **Zod Schemas**: `HackerNewsItemSchema`, `HackerNewsUserSchema`, etc.  
-- **TS Types**: `HackerNewsItem`, `HackerNewsCommentTree`, `HackerNewsUser`, etc.
 
 ## 🛡️ Caching & Rate Limiting
 
@@ -122,39 +118,78 @@ try {
 | Users    | 5 min          | 30 min                          | 500         |
 | Search   | 30 s           | 2 min                           | 500         |
 
-Uses LRU eviction and Bottleneck to throttle Algolia (~2.7 req/s).
+Uses LRU eviction and [Bottleneck](https://npm.im/bottleneck) to throttle Algolia (~2.7 req/s) in order to make sure we don't run into the 10,000/hour rate limit.
 
 ## 🧠 Advanced Usage
 
-- Swap `fetch` for Deno, Node streams, AWS Lambda, Cloudflare Workers, etc.  
-- Customize retry/backoff strategies  
-- Invalidate caches on-the-fly:
-  ```ts
-  client.invalidateItemCache(id);
-  client.clearAllCaches();
-  ```
-- Add custom hooks for request/response lifecycle:
-  ```ts
-  client.use({
-    beforeFetch: (url, opts) => {
-      // Add headers, log request, start timer
-      console.log(`Fetching: ${url}`);
-      const headers = { ...opts?.headers, 'x-custom-header': 'value' };
-      return { url, options: { ...opts, headers } };
-    },
-    afterFetch: (response) => {
-      // Record metrics, inspect responses
-      console.log(`Response: ${response.status} from ${response.url}`);
-      return response;
-    },
-    onError: (err) => {
-      // Handle or transform errors
-      console.error(`Error: ${err.message}`);
-      // Return a new error to replace the original
-      return new Error(`Wrapped: ${err.message}`);
-    }
-  });
-  ```
+### Cache Invalidation
+
+Manually solve one of the hardest problems in computer science.
+
+```ts
+client.invalidateItemCache(id);
+client.clearAllCaches();
+```
+
+### Hooks
+
+Add custom hooks for request/response lifecycle:
+
+```ts
+client.use({
+  beforeFetch: (url, opts) => {
+    // Add headers, log request, start timer
+    console.log(`Fetching: ${url}`);
+    const headers = { ...opts?.headers, 'x-custom-header': 'value' };
+    return { url, options: { ...opts, headers } };
+  },
+  afterFetch: (response) => {
+    // Record metrics, inspect responses
+    console.log(`Response: ${response.status} from ${response.url}`);
+    return response;
+  },
+  onError: (err) => {
+    // Handle or transform errors
+    console.error(`Error: ${err.message}`);
+    // Return a new error to replace the original
+    return new Error(`Wrapped: ${err.message}`);
+  }
+});
+```
+
+## 📊 API Reference
+
+### Zod Schemas
+
+| Schema Name | Description |
+|-------------|-------------|
+| `HackerNewsIdSchema` | Validates a Hacker News item ID (number, integer, non-negative) |
+| `HackerNewsUsernameSchema` | Validates a Hacker News username (non-empty string) |
+| `HackerNewsIdListSchema` | Validates an array of Hacker News item IDs |
+| `HackerNewsItemTypeSchema` | Validates item types ('job', 'story', 'comment', 'poll', 'pollopt') |
+| `HackerNewsItemSchema` | Validates complete Hacker News items (stories, comments, etc.) |
+| `HackerNewsUserSchema` | Validates Hacker News user profiles |
+| `HackerNewsUpdatesSchema` | Validates the updates endpoint response (changed items and profiles) |
+
+### TypeScript Types
+
+| Type Name | Description |
+|-----------|-------------|
+| `FetchType` | Type alias for the Fetch API |
+| `FetchParameters` | Parameters type for fetch function |
+| `RequestInfo` | Type for fetch request info (URL or string) |
+| `RequestInit` | Type for fetch request init options |
+| `HackerNewsId` | Type alias for a Hacker News item ID (number) |
+| `HackerNewsUsername` | Type alias for a Hacker News username (string) |
+| `HackerNewsIdList` | Type alias for an array of Hacker News item IDs |
+| `HackerNewsItemType` | Union type for item types ('job', 'story', 'comment', 'poll', 'pollopt') |
+| `HackerNewsItem` | Interface for Hacker News items (stories, comments, etc.) |
+| `HackerNewsCommentTree` | Extended HackerNewsItem with nested replies for comment trees |
+| `HackerNewsUser` | Interface for Hacker News user profiles |
+| `HackerNewsUpdates` | Interface for updates endpoint response |
+| `CacheOptions` | Interface for cache configuration options |
+| `RetryOptions` | Interface for retry mechanism configuration |
+| `ClientOptions` | Interface for client configuration options |
 
 [license-badge]: https://img.shields.io/npm/l/hacker-news-reel.svg
 [license]: https://opensource.org/licenses/MIT
