@@ -62,18 +62,18 @@ const client = createClient({
 
 ### Fetching Stories & Comments
 
-| Method | Description |
-|:-------|:------------|
-| `getTopStories()` | IDs of top stories |
-| `getNewStories()` | IDs of newest stories |
-| `getBestStories()` | IDs of best-ranked stories |
-| `getAskStories()` | IDs of Ask HN stories |
-| `getShowStories()` | IDs of Show HN stories |
-| `getJobStories()` | IDs of job listings |
-| `getItem(id)` | Fetch a story/comment/job by ID |
-| `getItems(ids, concurrency?)` | Batch fetch (optional concurrency limit) |
-| `getUser(username)` | Fetch a user profile |
-| `getItemWithComments(id, opts?)` | Story + nested comments (`maxDepth`, `concurrency`) |
+| Method                         | Description                                          |
+|:-------------------------------|:-----------------------------------------------------|
+| `getTopStories()`               | IDs of top stories                                  |
+| `getNewStories()`               | IDs of newest stories                               |
+| `getBestStories()`              | IDs of best-ranked stories                          |
+| `getAskStories()`               | IDs of Ask HN stories                               |
+| `getShowStories()`              | IDs of Show HN stories                              |
+| `getJobStories()`               | IDs of job listings                                 |
+| `getItem(id)`                   | Fetch a story/comment/job by ID                     |
+| `getItems(ids, concurrency?)`   | Batch fetch (optional concurrency limit)            |
+| `getUser(username)`             | Fetch a user profile                                |
+| `getItemWithComments(id, opts?)`| Story + nested comments (`maxDepth`, `concurrency`) |
 
 ### Search API
 
@@ -161,35 +161,32 @@ client.use({
 
 ### Zod Schemas
 
-| Schema Name | Description |
-|:------------|:------------|
-| `HackerNewsIdSchema` | ✓ Validates a Hacker News item ID (number, integer, non-negative) |
-| `HackerNewsUsernameSchema` | ✓ Validates a Hacker News username (non-empty string) |
-| `HackerNewsIdListSchema` | ✓ Validates an array of Hacker News item IDs |
-| `HackerNewsItemTypeSchema` | ✓ Validates item types ('job', 'story', 'comment', 'poll', 'pollopt') |
-| `HackerNewsItemSchema` | ✓ Validates complete Hacker News items (stories, comments, etc.) |
-| `HackerNewsUserSchema` | ✓ Validates Hacker News user profiles |
-| `HackerNewsUpdatesSchema` | ✓ Validates the updates endpoint response (changed items and profiles) |
+| Schema Name                | Description                                                                                 |
+|:---------------------------|:--------------------------------------------------------------------------------------------|
+| `HackerNewsIdSchema`       | Validates a Hacker News item ID (number, integer, non-negative)                             |
+| `HackerNewsUsernameSchema` | Validates a Hacker News username (non-empty string)                                         |
+| `HackerNewsIdListSchema`   | Validates an array of Hacker News item IDs                                                  |
+| `HackerNewsItemTypeSchema` | Validates item types (`'job'`, `'story'`, `'comment'`, `'poll'`, `'pollopt'`)               |
+| `HackerNewsItemSchema`     | Validates complete Hacker News items (stories, comments, etc.)                              |
+| `HackerNewsUserSchema`     | Validates Hacker News user profiles                                                         |
+| `HackerNewsUpdatesSchema`  | Validates the updates endpoint response (changed items and profiles)                        |
 
 ### TypeScript Types
 
-| Type Name | Description |
-|:----------|:------------|
-| `FetchType` | Type alias for the Fetch API |
-| `FetchParameters` | Parameters type for fetch function |
-| `RequestInfo` | Type for fetch request info (URL or string) |
-| `RequestInit` | Type for fetch request init options |
-| `HackerNewsId` | Type alias for a Hacker News item ID (number) |
-| `HackerNewsUsername` | Type alias for a Hacker News username (string) |
-| `HackerNewsIdList` | Type alias for an array of Hacker News item IDs |
-| `HackerNewsItemType` | Union type for item types ('job', 'story', 'comment', 'poll', 'pollopt') |
-| `HackerNewsItem` | Interface for Hacker News items (stories, comments, etc.) |
-| `HackerNewsCommentTree` | Extended HackerNewsItem with nested replies for comment trees |
-| `HackerNewsUser` | Interface for Hacker News user profiles |
-| `HackerNewsUpdates` | Interface for updates endpoint response |
-| `CacheOptions` | Interface for cache configuration options |
-| `RetryOptions` | Interface for retry mechanism configuration |
-| `ClientOptions` | Interface for client configuration options |
+| Type Name               | Description                                                                                           |
+|:------------------------|:------------------------------------------------------------------------------------------------------|
+| `FetchType`             | Type alias for the Fetch API                                                                          |
+| `FetchParameters`       | Parameters type for fetch function                                                                    |
+| `RequestInfo`           | Type for fetch request info (URL or string)                                                           |
+| `RequestInit`           | Type for fetch request init options                                                                   |
+| `HackerNewsId`          | Type alias for a Hacker News item ID (number)                                                         |
+| `HackerNewsUsername`    | Type alias for a Hacker News username (string)                                                        |
+| `HackerNewsIdList`      | Type alias for an array of Hacker News item IDs                                                       |
+| `HackerNewsItemType`    | Union type for item types (`'job'`, `'story'`, `'comment'`, `'poll'`, `'pollopt'`)                    |
+| `HackerNewsItem`        | Interface for Hacker News items (stories, comments, etc.)                                             |
+| `HackerNewsCommentTree` | Extended HackerNewsItem with nested replies for comment trees                                         |
+| `HackerNewsUser`        | Interface for Hacker News user profiles                                                               |
+| `HackerNewsUpdates`     | Interface for updates endpoint response                                                               |
 
 [license-badge]: https://img.shields.io/npm/l/hacker-news-reel.svg
 [license]: https://opensource.org/licenses/MIT
