@@ -14,8 +14,8 @@
     "test": "bun test",
     "typecheck": "tsc --noEmit",
     "watch": "bun run build.ts --watch",
-    "prepublish": "bun run verify && bun run build",
-    "prepublishOnly": "bun run build",
+    "prepack": "bun run verify && bun run build",
+    "prepublishOnly": "bun run verify && bun run build",
     "prepare": "husky",
     "verify": "bun run format && bun run lint && bun run typecheck && bun run test"
   },
