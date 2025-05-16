@@ -3,9 +3,6 @@
 [![License][license-badge]][license]
 [![npm version](https://img.shields.io/npm/v/hacker-news-reel.svg)](https://www.npmjs.com/package/hacker-news-reel)
 [![CI](https://github.com/stevekinney/hacker-news-reel/actions/workflows/ci.yml/badge.svg)](https://github.com/stevekinney/hacker-news-reel/actions/workflows/ci.yml)
-[![Tests](https://github.com/stevekinney/hacker-news-reel/actions/workflows/test.yml/badge.svg)](https://github.com/stevekinney/hacker-news-reel/actions/workflows/test.yml)
-[![Lint](https://github.com/stevekinney/hacker-news-reel/actions/workflows/lint.yml/badge.svg)](https://github.com/stevekinney/hacker-news-reel/actions/workflows/lint.yml)
-[![Type Check](https://github.com/stevekinney/hacker-news-reel/actions/workflows/typecheck.yml/badge.svg)](https://github.com/stevekinney/hacker-news-reel/actions/workflows/typecheck.yml)
 
 A lightning-fast, type-safe Hacker News API client with built-in Zod validation—because guessing is overrated. Built for modern TypeScript, Node.js, Deno, and Bun.
 
