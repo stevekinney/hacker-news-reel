@@ -62,18 +62,56 @@ const client = createClient({
 
 ### Fetching Stories & Comments
 
-| Method                               | Description                                         |
-| ------------------------------------ | --------------------------------------------------- |
-| `getTopStories()`                    | IDs of top stories                                  |
-| `getNewStories()`                    | IDs of newest stories                               |
-| `getBestStories()`                   | IDs of best-ranked stories                          |
-| `getAskStories()`                    | IDs of Ask HN stories                               |
-| `getShowStories()`                   | IDs of Show HN stories                              |
-| `getJobStories()`                    | IDs of job listings                                 |
-| `getItem(id)`                        | Fetch a story/comment/job by ID                     |
-| `getItems(ids, concurrency?)`        | Batch fetch (optional concurrency limit)            |
-| `getUser(username)`                  | Fetch a user profile                                |
-| `getItemWithComments(id, opts?)`     | Story + nested comments (`maxDepth`, `concurrency`) |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Method</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>getTopStories()</code></td>
+      <td>IDs of top stories</td>
+    </tr>
+    <tr>
+      <td><code>getNewStories()</code></td>
+      <td>IDs of newest stories</td>
+    </tr>
+    <tr>
+      <td><code>getBestStories()</code></td>
+      <td>IDs of best-ranked stories</td>
+    </tr>
+    <tr>
+      <td><code>getAskStories()</code></td>
+      <td>IDs of Ask HN stories</td>
+    </tr>
+    <tr>
+      <td><code>getShowStories()</code></td>
+      <td>IDs of Show HN stories</td>
+    </tr>
+    <tr>
+      <td><code>getJobStories()</code></td>
+      <td>IDs of job listings</td>
+    </tr>
+    <tr>
+      <td><code>getItem(id)</code></td>
+      <td>Fetch a story/comment/job by ID</td>
+    </tr>
+    <tr>
+      <td><code>getItems(ids, concurrency?)</code></td>
+      <td>Batch fetch (optional concurrency limit)</td>
+    </tr>
+    <tr>
+      <td><code>getUser(username)</code></td>
+      <td>Fetch a user profile</td>
+    </tr>
+    <tr>
+      <td><code>getItemWithComments(id, opts?)</code></td>
+      <td>Story + nested comments (<code>maxDepth</code>, <code>concurrency</code>)</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Search API
 
@@ -111,12 +149,42 @@ try {
 
 ## 🛡️ Caching & Rate Limiting
 
-| Resource | Fresh (maxAge) | Stale (`staleWhileRevalidate`)  | Max Entries |
-| -------- | -------------- | ------------------------------- | ----------- |
-| Items    | 5 min          | 1 h                             | 2000        |
-| Lists    | 30 s           | 2 min                           | 20          |
-| Users    | 5 min          | 30 min                          | 500         |
-| Search   | 30 s           | 2 min                           | 500         |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Resource</th>
+      <th align="center">Fresh (maxAge)</th>
+      <th align="center">Stale (<code>staleWhileRevalidate</code>)</th>
+      <th align="center">Max Entries</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left">Items</td>
+      <td align="center"><code>5 min</code></td>
+      <td align="center"><code>1 h</code></td>
+      <td align="center">2000</td>
+    </tr>
+    <tr>
+      <td align="left">Lists</td>
+      <td align="center"><code>30 s</code></td>
+      <td align="center"><code>2 min</code></td>
+      <td align="center">20</td>
+    </tr>
+    <tr>
+      <td align="left">Users</td>
+      <td align="center"><code>5 min</code></td>
+      <td align="center"><code>30 min</code></td>
+      <td align="center">500</td>
+    </tr>
+    <tr>
+      <td align="left">Search</td>
+      <td align="center"><code>30 s</code></td>
+      <td align="center"><code>2 min</code></td>
+      <td align="center">500</td>
+    </tr>
+  </tbody>
+</table>
 
 Uses LRU eviction and [Bottleneck](https://npm.im/bottleneck) to throttle Algolia (~2.7 req/s) in order to make sure we don't run into the 10,000/hour rate limit.
 
@@ -162,34 +230,87 @@ client.use({
 ### Zod Schemas
 
 | Schema Name | Description |
-|-------------|-------------|
-| `HackerNewsIdSchema` | Validates a Hacker News item ID (number, integer, non-negative) |
-| `HackerNewsUsernameSchema` | Validates a Hacker News username (non-empty string) |
-| `HackerNewsIdListSchema` | Validates an array of Hacker News item IDs |
-| `HackerNewsItemTypeSchema` | Validates item types ('job', 'story', 'comment', 'poll', 'pollopt') |
-| `HackerNewsItemSchema` | Validates complete Hacker News items (stories, comments, etc.) |
-| `HackerNewsUserSchema` | Validates Hacker News user profiles |
-| `HackerNewsUpdatesSchema` | Validates the updates endpoint response (changed items and profiles) |
+|:------------|:------------|
+| `HackerNewsIdSchema` | ✓ Validates a Hacker News item ID (number, integer, non-negative) |
+| `HackerNewsUsernameSchema` | ✓ Validates a Hacker News username (non-empty string) |
+| `HackerNewsIdListSchema` | ✓ Validates an array of Hacker News item IDs |
+| `HackerNewsItemTypeSchema` | ✓ Validates item types ('job', 'story', 'comment', 'poll', 'pollopt') |
+| `HackerNewsItemSchema` | ✓ Validates complete Hacker News items (stories, comments, etc.) |
+| `HackerNewsUserSchema` | ✓ Validates Hacker News user profiles |
+| `HackerNewsUpdatesSchema` | ✓ Validates the updates endpoint response (changed items and profiles) |
 
 ### TypeScript Types
 
-| Type Name | Description |
-|-----------|-------------|
-| `FetchType` | Type alias for the Fetch API |
-| `FetchParameters` | Parameters type for fetch function |
-| `RequestInfo` | Type for fetch request info (URL or string) |
-| `RequestInit` | Type for fetch request init options |
-| `HackerNewsId` | Type alias for a Hacker News item ID (number) |
-| `HackerNewsUsername` | Type alias for a Hacker News username (string) |
-| `HackerNewsIdList` | Type alias for an array of Hacker News item IDs |
-| `HackerNewsItemType` | Union type for item types ('job', 'story', 'comment', 'poll', 'pollopt') |
-| `HackerNewsItem` | Interface for Hacker News items (stories, comments, etc.) |
-| `HackerNewsCommentTree` | Extended HackerNewsItem with nested replies for comment trees |
-| `HackerNewsUser` | Interface for Hacker News user profiles |
-| `HackerNewsUpdates` | Interface for updates endpoint response |
-| `CacheOptions` | Interface for cache configuration options |
-| `RetryOptions` | Interface for retry mechanism configuration |
-| `ClientOptions` | Interface for client configuration options |
+<table>
+  <thead>
+    <tr>
+      <th align="left">Type Name</th>
+      <th align="left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>FetchType</code></td>
+      <td>Type alias for the Fetch API</td>
+    </tr>
+    <tr>
+      <td><code>FetchParameters</code></td>
+      <td>Parameters type for fetch function</td>
+    </tr>
+    <tr>
+      <td><code>RequestInfo</code></td>
+      <td>Type for fetch request info (URL or string)</td>
+    </tr>
+    <tr>
+      <td><code>RequestInit</code></td>
+      <td>Type for fetch request init options</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsId</code></td>
+      <td>Type alias for a Hacker News item ID (number)</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsUsername</code></td>
+      <td>Type alias for a Hacker News username (string)</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsIdList</code></td>
+      <td>Type alias for an array of Hacker News item IDs</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsItemType</code></td>
+      <td>Union type for item types ('job', 'story', 'comment', 'poll', 'pollopt')</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsItem</code></td>
+      <td>Interface for Hacker News items (stories, comments, etc.)</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsCommentTree</code></td>
+      <td>Extended HackerNewsItem with nested replies for comment trees</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsUser</code></td>
+      <td>Interface for Hacker News user profiles</td>
+    </tr>
+    <tr>
+      <td><code>HackerNewsUpdates</code></td>
+      <td>Interface for updates endpoint response</td>
+    </tr>
+    <tr>
+      <td><code>CacheOptions</code></td>
+      <td>Interface for cache configuration options</td>
+    </tr>
+    <tr>
+      <td><code>RetryOptions</code></td>
+      <td>Interface for retry mechanism configuration</td>
+    </tr>
+    <tr>
+      <td><code>ClientOptions</code></td>
+      <td>Interface for client configuration options</td>
+    </tr>
+  </tbody>
+</table>
 
 [license-badge]: https://img.shields.io/npm/l/hacker-news-reel.svg
 [license]: https://opensource.org/licenses/MIT
